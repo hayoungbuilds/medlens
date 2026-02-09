@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - CORS_ORIGIN=http://localhost:5173
+      - PATIENT_COUNT=20
+      - UPDATE_INTERVAL=1000
+    volumes:
+      - ./backend/src:/app/src
+    command: npm run dev
+    networks:
+      - medlens-network
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3001
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+    command: npm run dev
+    depends_on:
+      - backend
+    networks:
+      - medlens-network
+
+networks:
+  medlens-network:
+    driver: bridge
