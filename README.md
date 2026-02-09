@@ -170,7 +170,7 @@ medlens/
 ├── docker-compose.yml                # 프로덕션 배포 설정
 ├── README.md                         # 이 파일
 └── .gitignore
-```
+
 ├── frontend/                         # React + Vite 프론트엔드
 │   ├── src/
 │   │   ├── components/
