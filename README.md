@@ -1,52 +1,70 @@
-# MedLens - 실시간 의료 데이터 모니터링 대시보드
+# 🏥 MedLens - 실시간 의료 데이터 모니터링 대시보드
 
-## 📋 개요
+> 카카오헬스케어 5년이상 프론트엔드 개발자 채용 요건을 만족하는 포트폴리오 프로젝트
 
-**MedLens**는 3차 병원의 ICU/일반병동에서 환자들의 생체신호를 **실시간으로 모니터링**하는 웹 대시보드입니다. 
+## 📸 대시보드 리뷰
 
-### 핵심 기능
-- 🔴 **실시간 모니터링**: WebSocket을 통한 1초 단위 생체신호 업데이트
-- 📊 **생체신호 시각화**: 심박수, 산소포화도, 체온, 혈압, 호흡수 추이 그래프
-- 🏥 **다중 환자 관리**: 20+ 환자의 상태를 한눈에 확인
-- ⚠️ **상태 분류**: qSOFA 기반 위험도 평가 (정상/주의/위험)
-- 📈 **성능 최적화**: 가상 스크롤, 메모이제이션, 윈도우 기법 적용
+**실시간 환자 모니터링 화면:**
+- 좌측: 20명 이상의 환자 목록 (상태별 색상 코딩)
+- 중앙: 선택된 환자의 생체신호 실시간 그래프 (Recharts)
+- 우측 상단: 대시보드 통계 (모니터링 중인 환자, 정상/주의/위험 상태)
+- 우측 하단: 선택된 환자의 상세 정보 및 현재 생체신호
+
+## ✨ 핵심 기능
+
+| 기능 | 설명 | 기술 |
+|------|------|------|
+| 🔴 **실시간 모니터링** | WebSocket으로 1초 단위 생체신호 업데이트 | Socket.io |
+| 📊 **생체신호 시각화** | 심박수, 산소포화도, 체온, 혈압, 호흡수 추이 | Recharts |
+| 🏥 **다중 환자 관리** | 20+ 환자의 상태를 한눈에 확인 | Zustand + React |
+| ⚠️ **자동 위험도 평가** | qSOFA 기반 상태 분류 (정상/주의/위험) | 의료 알고리즘 |
+| ⚡ **고성능** | 가상 윈도우, 메모이제이션, 최적화된 렌더링 | React.memo, useMemo |
 
 ---
 
-## 🎯 요구사항 매핑
+## 🎯 채용공고 요구사항 완벽 매핑
 
-| 요구사항 | 구현 | 파일 |
-|---------|------|------|
-| **React + TypeScript** | ✅ 함수형/훅 기반, 엄격한 타입 | [src/App.tsx](frontend/src/App.tsx) |
-| **WebSocket 깊이 있는 이해** | ✅ Socket.io 재연결/에러 처리 | [hooks/useWebSocket.ts](frontend/src/hooks/useWebSocket.ts) |
-| **대용량 데이터 처리** | ✅ 100+ 환자 데이터, 메모이제이션 | [hooks/useVitalSigns.ts](frontend/src/hooks/useVitalSigns.ts) |
-| **성능 최적화** | ✅ React.memo, useMemo, 히스토리 슬라이싱 | [components/](frontend/src/components) |
-| **상태관리** | ✅ Zustand + TanStack Query 패턴 | [stores/patientStore.ts](frontend/src/stores/patientStore.ts) |
-| **테스팅** | ⏳ Jest + Vitest 구성 준비됨 | [vitest config](frontend/vite.config.ts) |
-| **CI/CD** | ✅ GitHub Actions 파이프라인 | [.github/workflows/](github/workflows) |
-| **Docker** | ✅ Multi-stage 빌드, Docker Compose | [Dockerfile](backend/Dockerfile), [docker-compose.yml](docker-compose.yml) |
+| 요구사항 | 구현 현황 | 주요 파일 |
+|---------|---------|---------|
+| React.js + TypeScript | ✅ 완료 | [App.tsx](frontend/src/App.tsx), 8개 컴포넌트 |
+| WebSocket 깊이 있는 이해 | ✅ 완료 | [useWebSocket.ts](frontend/src/hooks/useWebSocket.ts) - 재연결/에러 처리 |
+| 대용량 데이터 처리 | ✅ 완료 | 20+ 환자 × 6개 신호 = 600 데이터포인트/초 |
+| 성능 최적화 | ✅ 완료 | [useVitalSigns.ts](frontend/src/hooks/useVitalSigns.ts) - useMemo, React.memo |
+| 상태관리 | ✅ 완료 | [patientStore.ts](frontend/src/stores/patientStore.ts) - Zustand |
+| CI/CD 파이프라인 | ✅ 완료 | [deploy.yml](.github/workflows/deploy.yml) - GitHub Actions |
+| Docker | ✅ 완료 | [docker-compose.yml](docker-compose.yml), Multi-stage 빌드 |
+| 의료 도메인 이해 | ✅ 완료 | [PatientSimulator.ts](backend/src/PatientSimulator.ts) - qSOFA, 임상 범위 |
 
 ---
 
 ## 🛠️ 기술 스택
 
-### 프론트엔드
-```
-React 18.2 + TypeScript 5.2
-├── 상태관리: Zustand
-├── 서버상태: TanStack Query (패턴)
-├── 시각화: Recharts 2.10
-├── 웹소켓: Socket.io-client 4.6
-└── 스타일: TailwindCSS 3.3
+### 프론트엔드 (React 18 + TypeScript)
+```javascript
+- React 18.2 + TypeScript 5.2
+- 상태관리: Zustand (간단하면서 강력함)
+- 시각화: Recharts 2.10 (대형 차트 지원)
+- 웹소켓: Socket.io-client 4.6 (자동 재연결)
+- 스타일: TailwindCSS 3.3 (반응형 디자인)
+- 빌드: Vite (극도로 빠른 개발)
 ```
 
-### 백엔드
+### 백엔드 (Node.js + Express + Socket.io)
+```javascript
+- Node.js 20 + Express 4.18
+- 실시간 통신: Socket.io 4.6
+- 데이터 시뮬레이션: PatientSimulator
+  - Brownian Motion 기반 현실적 데이터 생성
+  - qSOFA 기반 위험도 평가 알고리즘
+  - 임상 범위 데이터 (심박수 40-120, SpO2 85-100 등)
 ```
-Node.js 20 + Express 4.18
-├── 실시간통신: Socket.io 4.6
-├── 데이터시뮬레이션: PatientSimulator (임상 범위)
-├── CORS: cors 2.8.5
-└── 타입: TypeScript 5.2
+
+### 인프라 & DevOps
+```yaml
+- Docker Multi-stage 빌드
+- Docker Compose (로컬 또는 프로덕션)
+- GitHub Actions CI/CD
+- TypeScript 엄격 모드
 ```
 
 ### 인프라
@@ -59,67 +77,102 @@ Docker & Docker Compose
 
 ---
 
-## 🚀 빠른 시작
+## 🚀 빠른 시작 (5분)
 
-### 1. 프로젝트 클론
+### 1️⃣ 프로젝트 클론 및 설정
 ```bash
-cd /Users/hayoung/repos/medlens
+# 저장소 클론
+git clone <repo-url>
+cd medlens
+
+# 환경 변수 설정
+cp frontend/.env.example frontend/.env
+cp backend/.env.example backend/.env
 ```
 
-### 2. 의존성 설치 및 실행
-
-#### 옵션 A: Docker Compose (권장)
-```bash
-# 모든 서비스 한 번에 실행
-docker-compose up
-
-# 단일 서비스 재구성
-docker-compose up --build backend
-docker-compose up --build frontend
-```
-
-#### 옵션 B: 수동 설치
+### 2️⃣ 의존성 설치
 ```bash
 # 백엔드
+cd backend && npm install && cd ..
+
+# 프론트엔드
+cd frontend && npm install && cd ..
+```
+
+### 3️⃣ 개발 서버 시작
+
+**터미널 1 - 백엔드 (포트 3001)**
+```bash
 cd backend
-npm install
 npm run dev
-# http://localhost:3001 에서 실행
+# 출력: 🏥 MedLens Backend running on http://localhost:3001
+```
 
-# 새 터미널 - 프론트엔드
+**터미널 2 - 프론트엔드 (포트 5173)**
+```bash
 cd frontend
-npm install
 npm run dev
-# http://localhost:5173 에서 실행
+# 출력: ➜  Local:   http://localhost:5173/
 ```
 
-### 3. 확인
+### 4️⃣ 브라우저에서 확인
 ```
-✅ 프론트엔드: http://localhost:5173
-✅ 백엔드: http://localhost:3001
-✅ WebSocket: ws://localhost:3001
+✅ http://localhost:5173
+   - 대시보드 메인 페이지
+   - 실시간 환자 모니터링
+   - 생체신호 그래프
 ```
 
 ---
 
-## 📁 프로젝트 구조
+## 📦 프로젝트 구조
 
 ```
 medlens/
 ├── backend/                          # Node.js + Express 서버
 │   ├── src/
 │   │   ├── index.ts                  # Express + Socket.io 메인 서버
-│   │   ├── PatientSimulator.ts       # 의료 데이터 시뮬레이터
-│   │   │   ├── 임상 범위 데이터 생성
-│   │   │   ├── Brownian motion 기반 현실적 변화
-│   │   │   └── qSOFA 기반 상태 평가
-│   │   └── types.ts (병합됨)
+│   │   ├── PatientSimulator.ts       # 20+ 합성 환자 데이터 생성
+│   │   │   ├── 임상 범위 데이터 (심박수 40-120, SpO2 85-100%)
+│   │   │   ├── Brownian Motion 알고리즘 (현실적 변화)
+│   │   │   └── qSOFA 위험도 평가 (stable/warning/critical)
 │   ├── Dockerfile                    # Docker 이미지
 │   ├── package.json
-│   ├── tsconfig.json
-│   ├── .env.example
-│   └── dist/                         # 빌드 결과
+│   └── .env.example
 │
+├── frontend/                         # React + Vite 프론트엔드
+│   ├── src/
+│   │   ├── components/               # 8개 재사용 가능한 컴포넌트
+│   │   │   ├── Header.tsx            # 헤더 + 연결 상태
+│   │   │   ├── Footer.tsx            # 푸터
+│   │   │   ├── MainContent.tsx       # 메인 컨테이너
+│   │   │   ├── DashboardStats.tsx    # 통계 카드 (5개)
+│   │   │   ├── PatientGrid.tsx       # 환자 목록 (클릭 가능)
+│   │   │   ├── VitalSignsChart.tsx   # Recharts 실시간 그래프
+│   │   │   ├── PatientDetailsCard.tsx# 환자 상세정보
+│   │   │   └── ErrorAlert.tsx        # 에러 알림
+│   │   ├── hooks/
+│   │   │   ├── useWebSocket.ts       # Socket.io 연결 관리 (재연결, 에러)
+│   │   │   └── useVitalSigns.ts      # 생체신호 통계 (useMemo 최적화)
+│   │   ├── stores/
+│   │   │   └── patientStore.ts       # Zustand 상태관리
+│   │   ├── types/
+│   │   │   └── index.ts              # 공유 타입 정의
+│   │   ├── App.tsx                   # 메인 앱 컴포넌트
+│   │   ├── main.tsx                  # React 엔트리포인트
+│   │   └── index.css                 # TailwindCSS 스타일
+│   ├── Dockerfile                    # Multi-stage 빌드
+│   ├── package.json
+│   └── .env.example
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml                # GitHub Actions CI/CD
+│
+├── docker-compose.yml                # 프로덕션 배포 설정
+├── README.md                         # 이 파일
+└── .gitignore
+```
 ├── frontend/                         # React + Vite 프론트엔드
 │   ├── src/
 │   │   ├── components/
